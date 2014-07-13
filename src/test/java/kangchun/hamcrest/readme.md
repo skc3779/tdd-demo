@@ -8,8 +8,12 @@ Hamcrest는 jMock이라는 Mock 라이브러리 저자들이 참여해 만든 Ma
 
 차례.
 
-- [Core와 확장 패키지](#core)
-- [](#)
+- [Core](#Core)
+- [Object](#Object)
+- [Logical](#Logical)
+- [Collection](#Collection)
+- [Number](#Number)
+- [Test](#Test)
 
 설명.
 
