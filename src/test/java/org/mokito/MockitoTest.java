@@ -1,4 +1,4 @@
-package org.kangchun;
+package org.mokito;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
