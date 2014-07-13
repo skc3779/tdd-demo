@@ -18,6 +18,7 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
@@ -59,9 +60,9 @@ public class MockitoTest {
         testMock.clear();
 
         // 검증
-        verify(testMock).add(1);
-        verify(testMock).add(2);
-        verify(testMock).clear();
+//        verify(testMock).add(1);
+//        verify(testMock).add(2);
+//        verify(testMock).clear();
 
         // 최소한 1번 호출되었는지 검증
         verify(testMock, atLeastOnce()).add(anyInt());
@@ -150,6 +151,7 @@ public class MockitoTest {
 
     /**
      * CallBack으로 Stub 만들기
+     * @throws Exception
      */
     @Test
     public void callbackStubTest() throws Exception {
@@ -216,6 +218,7 @@ public class MockitoTest {
      * spyLis2 : 감시에 대한 인스턴스를 reflection을 통해 mockito로 생성
      *           @Before 선언된 메소드에 MockitoAnnotations.initMocks(this) 선언해 줘야 한다.
      * @throws Exception
+     * @since 1.8.3
      */
     @Test
     public void spyAnnotationTest() throws Exception {
@@ -224,5 +227,102 @@ public class MockitoTest {
 
         doReturn("1").when(spyList2).get(0);
         assertThat(spyList2.get(0), is("1"));
+    }
+
+    /**
+     * 타임아웃 검증기능
+     * @see
+     * <pre>
+     *     프로그램이 동시에 실행되는 경우에 대해 테스트할 때 유용할 것이라고 생각됨
+     *     이 기능은 거의 사용되지 않아야 하지만, 멀티 스레드 시스템을 테스트할 때에는 도움이 될것으로 보임.
+     *     InOrder(순서대로 실행되는지 체크)를 이용한 검증은 아직 구현되지 않음
+     * </pre>
+     * @throws Exception
+     */
+    @Test
+    public void timeoutTest() throws Exception {
+        // 생성
+        List<Integer> testMock = mock(ArrayList.class);
+
+        // 사용
+        testMock.add(1);
+        testMock.add(2);
+        testMock.clear();
+
+        // 2와 clear가 1번 호출되었는지 검증
+        verify(testMock, timeout(1000).times(1)).add(2);
+        verify(testMock, timeout(1000).times(1)).clear();
+    }
+
+    /**
+     * 불필요하기 실행되는 코드를 찾아보기
+     * @see
+     * <pre>
+     *     경고 : 고전적인 방법인 expect-run-verify 방식의 테스트를 하는 사람들은 verifyNoMoreInteractions()를 너무 자주,
+     *     심지어는 모든 테스트에서 사용하는 경향이 있습니다.
+     *     verifyNoMoreInteractions()는 아무 테스트에서나 무분별하게 사용되지 않았으면 합니다.
+     *     verifyNoMoreInteractions()는 실행 여부를 검사하는 테스트 툴에서 간편하게 사용될 수 있는
+     *     assertion 방법입니다. 정말 적절한 상황에서만 사용하세요.
+     *     이 method를 불필요하게 많이 사용하게 되면 유지보수가 힘든 테스트가 만들어집니다.
+     *     여기를 참조하면 더 많은 정보를 얻을 수 있습니다.
+     * </pre>
+     * @throws Exception
+     */
+    @Test
+    public void verifyNoMoreInteractionsTest() throws Exception {
+        // 생성
+        List<Integer> testMock = mock(ArrayList.class);
+
+        testMock.add(1);
+        // testMock.add(3);
+
+        // 일반적인 검증으로 add(1) 호출하였는지
+        verify(testMock).add(1);
+
+        // 메소드가 호출되지 않았는지 검증
+        verify(testMock, never()).add(2);
+
+        // 사용되지 않은 When 이 있으면
+        // testMock.add(3); (주석처리하면 성공)
+        // 이구문은 실패할 것입니다.
+        verifyNoMoreInteractions(ignoreStubs(testMock));
+    }
+
+    /**
+     * mock 실행되지 않았는지 확인하기
+     * @throws Exception
+     */
+    @Test
+    public void verifyZeroInteractionsTest() throws Exception {
+        // given
+        List<Integer> testMock = mock(ArrayList.class);
+        List<Integer> twoMock = mock(ArrayList.class);
+
+        testMock.add(1);
+
+        // 일반적인 검증으로 add(1) 호출하였는지
+        verify(testMock).add(1);
+
+        // 메소드가 호출되지 않았는지 검증
+        verify(testMock, never()).add(2);
+
+        // 다른 mock이 호출되지 않았는지 검증
+        verifyZeroInteractions(ignoreStubs(twoMock));
+    }
+
+
+    @Test
+    public void mockingDetailsTest() throws Exception {
+
+    }
+
+    @Test
+    public void delegateTest() throws Exception {
+
+    }
+
+    @Test
+    public void mockMakerTest() throws Exception {
+
     }
 }

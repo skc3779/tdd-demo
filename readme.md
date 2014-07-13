@@ -39,6 +39,7 @@ Mockito 개발자인 Szczepan Faber가 사이트에 소개한 Mock 프레임워�
 | Stub            | 테스트에 필요한 Mock 객체의 동작을 지정  |
 | Exercise        | 테스트 메소드 내에 Mock 객체를 사용  |
 | Verify          | 메소드가 예상대로 호출됐는지 검증 |
+| spy             | 테스트에 필요한 실객체를 감시자를 이용해 동작을 지정|
 
 ### verify 검증 메소드
 
@@ -52,5 +53,14 @@ Mockito 개발자인 Szczepan Faber가 사이트에 소개한 Mock 프레임워�
 
 ### Argument Matcher
 
+|||
+|---|---|
+|any Type|anyInteger(), anyString() etc Java타입에 해당하는 any 시리즈 |
+|anyCollection| ㅣList, Map, Set etc Collection 객체이면 무방 |
+|argTaht|Mockit도 Hamcrest Matcher를 사용하고 있음|
+|isNull| Null이면 Ok |
+|isNotNull| Null아니면 Ok |
 
-_* 참고출처 : 테스트 주도개발 TDD 실천법과 도구 ( 채수원 지음 )_
+
+_* 참고출처 1. 테스트 주도개발 TDD 실천법과 도구 ( 채수원 지음 )_
+_* 참고출처 2. https://code.google.com/p/mockito/wiki/MockitoFeaturesInKorean_
