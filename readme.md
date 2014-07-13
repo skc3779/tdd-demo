@@ -1,5 +1,4 @@
 # Mockito
----
 
 차례.
 
@@ -11,7 +10,6 @@ Mokito는 최근 떠오르고 있는 Mock 프레임워크이고 역사는 오래
 TDD 개발자들이 주로 사용했던 방식인 상태 기반의 테스트를 지향한다는 점에서 가장인기 있는 Test 프레임워크이다.
 
 ## Mockito의 특징 
----
 
 Mockito 개발자인 Szczepan Faber가 사이트에 소개한 Mock 프레임워크의 특징
 
@@ -34,7 +32,6 @@ Mockito 개발자인 Szczepan Faber가 사이트에 소개한 Mock 프레임워�
 7. 실패 시에 발생하는 에러추적이 깔끔핟.
 
 ## Mock 기본 사용법
----
 
 | Class           | Description |
 | --------------- | --------------- |
@@ -45,6 +42,7 @@ Mockito 개발자인 Szczepan Faber가 사이트에 소개한 Mock 프레임워�
 
 ### verify 검증 메소드
 
+|||
 |--- |--- |
 |times |n번 호출됐는지 확인 |
 |never |호출되지 않았어야 함 |
